@@ -17,7 +17,7 @@
           <logout logout-success-url="/logout" />
       </http>
       
-      <!-- in memory authentication provider -->
+      <!-- in memory authentication provider
       <authentication-manager>
         <authentication-provider>
           <user-service>
@@ -25,9 +25,9 @@
           </user-service>
         </authentication-provider>
       </authentication-manager>
-     
-      <!-- embedded ldap server for development 
-      <ldap-server id="devLdapServer" ldif="classpath:users.ldif" root="dc=metabuild,dc=org" />
+     -->
+      <!-- embedded ldap server for development -->
+      <ldap-server ldif="classpath:metabuild.ldif" root="dc=metabuild,dc=org" />
       
       <authentication-manager>
           <ldap-authentication-provider
@@ -37,5 +37,5 @@
               user-search-filter="uid={0}"
           />
       </authentication-manager>
-      -->
+      
 </beans:beans>
