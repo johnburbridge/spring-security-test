@@ -2,13 +2,12 @@
  * Spring Security LDAP Test
  * --------------------------
  */
-description = "Test app to authenticate with LDAP"
+description = "Spring MVC with LDAP authentication"
 
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
-
 
 ext.environment = project.hasProperty('environment') ? environment: 'development';
 logger.info("Environment is set to \"${environment}\"");
@@ -127,48 +126,3 @@ if (project.hasProperty('environment') && environment == 'build' ) {
 	jettyStop.dependsOn(integrationTest)
 	build.dependsOn(jettyStop)
 }
-
-/*
- * Initialize the source / resource directories
- */
-task initialize(type: CreateDirectories) {
-	directories = [
-		sourceSets*.java.srcDirs,
-		sourceSets*.resources.srcDirs,
-		file(webAppDirName)
-	].flatten()
-}
-tasks.eclipse.dependsOn(initialize)
-
-
-import java.io.File;
-import java.util.List;
-
-import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.OutputDirectories;
-import org.gradle.api.tasks.TaskAction;
-
-import java.util.logging.Logger;
-
-/**
- * Custom task to creates directories if they don't already exist
- */
-class CreateDirectories extends DefaultTask {
-
-	Logger logger = Logger.getLogger("CreateDirectories")
-	
-	@OutputDirectories
-	List<File> directories
-
-	@TaskAction
-	def createDirectories() {
-		directories.each { File directory ->
-			if (!directory.exists()) {
-				logger.warn("Creating ${directory}")
-				directory.mkdirs()
-			}
-		}
-	}
-}
-
-
