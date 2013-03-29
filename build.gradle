@@ -52,7 +52,6 @@ dependencies {
 		'org.springframework.security:spring-security-web:3.1.3.RELEASE',
 		'org.springframework.security:spring-security-config:3.1.3.RELEASE',
 		'org.springframework.security:spring-security-ldap:3.1.3.RELEASE',
-		'org.apache.directory.server:apacheds-all:2.0.0-M10', //2.0.0-M10
 		'org.apache.tiles:tiles-core:3.0.1',
 		'org.apache.tiles:tiles-template:3.0.1',
 		'org.apache.tiles:tiles-jsp:3.0.1',
@@ -63,8 +62,10 @@ dependencies {
 		'org.springframework:spring-test:3.2.2.RELEASE'
 
 	runtime 'cglib:cglib:2.2.2',
-		'org.slf4j:slf4j-simple:1.7.1'
-	
+		'org.slf4j:slf4j-simple:1.7.1',
+		'org.apache.directory.server:apacheds-core:1.5.5',
+		'org.apache.directory.server:apacheds-server-jndi:1.5.5'
+
 	integrationCompile sourceSets.main.output,
 		configurations.testCompile,
 		sourceSets.test.output
@@ -105,6 +106,7 @@ jettyRun {
 	doFirst {
 		System.setProperty('spring.profiles.active', 'default, dev')
 		System.setProperty('user.dir', "${projectDir}")
+		System.setProperty('apacheDSWorkDir',"${buildDir}/apacheDSWork")
 	}
 	// if running from a development environment, keep Jetty running in the foreground
 	daemon = (project.hasProperty('environment') && environment != 'development')
